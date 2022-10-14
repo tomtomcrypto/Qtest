@@ -2,7 +2,7 @@
 
 cd /app/
 
-systemAccounts=("eosio.token" "eosio.bpay" "eosio.msig" "eosio.names" "eosio.ram" "eosio.ramfee" "eosio.saving" "eosio.stake" "eosio.vpay" "eosio.rex")
+systemAccounts=("eosio.token" "eosio.bpay" "eosio.msig" "eosio.names" "eosio.ram" "eosio.ramfee" "eosio.saving" "eosio.stake" "eosio.vpay" "eosio.rex", "eosio.evm")
 # Create system accounts
 for account in ${systemAccounts[@]} ; do
   echo $account
@@ -13,6 +13,10 @@ done
 cleos set contract eosio.token contracts/eosio.token eosio.token.wasm eosio.token.abi
 cleos push action eosio.token create '["eosio", "10000000000.0000 TLOS"]' -p eosio.token@active
 cleos push action eosio.token issue '[ "eosio", "10000000000.0000 TLOS", "initial supply" ]' -p eosio@active
+
+# Deploy EVM contract
+cleos set contract eosio.evm contracts/eosio.evm eosio.evm.wasm eosio.evm.abi
+cleos push action eosio.evm init '[]' -p eosio.evm@active
 
 # Deploy msig contract
 cleos set contract eosio.msig contracts/eosio.msig eosio.msig.wasm eosio.msig.abi
